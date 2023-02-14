@@ -47,7 +47,7 @@ function inputOperator(event) {
   if (!n1) {
     return
   }
-  else if (/[+\-=*]/.test(displayValue.charAt(displayValue.length - 1))) {
+  else if (/[+\-=*]/.test(displayValue.toString().charAt(displayValue.length - 1))) {
     return
   }
   else if (calculating) {
@@ -68,7 +68,7 @@ let dotButton = document.querySelector(".dot")
 dotButton.addEventListener("click", inputDot)
 
 function inputDot(event) {
-  if (!n1 || /[+\-=*]/.test(displayValue.charAt(displayValue.length - 1))) {
+  if (!n1 || /[+\-=*]/.test(displayValue.toString().charAt(displayValue.length - 1))) {
     return
   } else if (!calculating) {
     if (/[.]/.test(n1)) {
@@ -91,7 +91,6 @@ function inputDot(event) {
 document.querySelector(".equal").addEventListener("click", equal);
 
 function equal() {
-  console.log (n1, n2, displayValue, calculating)
   if (n2 !== "") {
     operate()
     calculating = false
@@ -151,12 +150,5 @@ function factorial () {
     answer *= i
   }
   n1 = answer
+  
 };
-
-
-/*
-to do: prevent bugs when = is entered at wrong moment;
-round answers with long decimals so that they don’t overflow the screen
-avoid writing errors after equal
-avoid double .
-*/
