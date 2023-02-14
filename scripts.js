@@ -2,6 +2,7 @@ let n1 = ""
 let n2 = ""
 let operator = ""
 let calculating = false
+let displayValue = ""
 
 let screen = document.querySelector(".screen")
 
@@ -12,6 +13,8 @@ clearButton.addEventListener("click", clearAll);
 function clearAll() {
   n1 = ""
   n2 = ""
+  operator = ""
+  displayValue = ""
   calculating = false
   screen.innerText = "0"
 }
@@ -23,7 +26,10 @@ numberButton.forEach(button => {
 });
 
 function inputNumber(event) {
-  if (!calculating) {
+  if (displayValue.length > 35) {
+    return
+  }
+  else if (!calculating) {
     n1 += event.target.id
   } else {
     n2 += event.target.id
@@ -38,16 +44,59 @@ operatorButton.forEach(button => {
 });
 
 function inputOperator(event) {
-  console.log(n1, n2, typeof n1)
-  operator = event.target.id
-  displayValue += event.target.id
-  screen.innerText = displayValue
-  calculating = true
+  if (!n1) {
+    return
+  }
+  else if (/[+\-=*]/.test(displayValue.charAt(displayValue.length - 1))) {
+    return
+  }
+  else if (calculating) {
+    operate()
+    operator = event.target.id
+    displayValue += event.target.id
+    screen.innerText = displayValue
+  } else {
+    console.log(n1, n2, typeof n1)
+    operator = event.target.id
+    displayValue += event.target.id
+    screen.innerText = displayValue
+    calculating = true
+  }
 }
+
+let dotButton = document.querySelector(".dot")
+dotButton.addEventListener("click", inputDot)
+
+function inputDot(event) {
+  if (!n1 || /[+\-=*]/.test(displayValue.charAt(displayValue.length - 1))) {
+    return
+  } else if (!calculating) {
+    if (/[.]/.test(n1)) {
+      return
+    } else {
+      n1 += event.target.id}
+  } else { if (/[.]/.test(n2)) {
+    return
+  } else{
+    n2 += event.target.id}
+  }
+  displayValue = n1 + operator + n2
+  screen.innerText = displayValue
+}
+
+
 // Display
 
 // show answer
-document.querySelector(".equal").addEventListener("click", operate);
+document.querySelector(".equal").addEventListener("click", equal);
+
+function equal() {
+  console.log (n1, n2, displayValue, calculating)
+  if (n2 !== "") {
+    operate()
+    calculating = false
+  } return
+}
 
 // Operate
 function operate() {
@@ -103,3 +152,11 @@ function factorial () {
   }
   n1 = answer
 };
+
+
+/*
+to do: prevent bugs when = is entered at wrong moment;
+round answers with long decimals so that they don’t overflow the screen
+avoid writing errors after equal
+avoid double .
+*/
