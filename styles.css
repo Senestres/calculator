@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(222, 240, 255);
+}
+
+.sidebar {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+#grid {
+    grid-template-columns: repeat(4, 100px);
+    display: grid;
+    grid-template-areas: 
+    "screen screen screen screen";
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-height: 300px;
+}
+
+.gridSquare {
+    height: var(--size);
+    width: var(--size);
+    margin: none;
+    background-color: white;
+}
+
+.screen {
+    grid-area: screen;
+    display: flex;
+    background-color: rgb(0, 156, 104);
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 20px;
+}
